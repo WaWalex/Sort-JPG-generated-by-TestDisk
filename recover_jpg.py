@@ -6,7 +6,7 @@ import exifread
 
 SRC_PATH = 'D:/recovery'
 OUT_PATH = 'E:/recovery2/jpg'
-TAGS = ['Canon IXUS 210', 'SM-G925F', 'MI 9', 'DSC-W210', 'GT-I9195', 'Canon EOS 2000D', 'Canon EOS 6D', 'GT-S6500']
+MODELS = []
 
 file_copied = 1
 jpg_files = []
@@ -49,13 +49,15 @@ if __name__ == "__main__":
             f = open(file_path, 'rb')
             tags = exifread.process_file(f)
             if tags != {} and 'Image Model' in tags:
-                if (str(tags['Image Model']) in TAGS):
+                if (str(tags['Image Model']) in MODELS):
                     examine_copy(file_path, tags)
                 else:
-                    print(f"SKIP MODEL '{str(tags['Image Model'])}'?")
-                    # input()
+                    image_model = str(tags['Image Model'])
+                    res = input(f"ARE YOU INTERESTED IN THIS DEVICE '{image_model}'? [y/n]")
+                    if (str.lower(res) == 'y'):
+                        MODELS.append(image_model)
             else:
                 print(f"No TAGS for '{file_path}'")
         except Exception as e:
             print(e, file_path)
-            # input()
+            input("Press ENTER to continue...")
