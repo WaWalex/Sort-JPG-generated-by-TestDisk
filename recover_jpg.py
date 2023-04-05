@@ -1,8 +1,8 @@
-import math
-import os
-import exifread
-from shutil import copyfile
 import datetime
+import os
+from shutil import copyfile
+
+import exifread
 
 SRC_PATH = 'D:/recovery'
 OUT_PATH = 'E:/recovery2/jpg'
